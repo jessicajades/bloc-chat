@@ -36,7 +36,7 @@ class RoomList extends Component {
     return (
       <div className="roomList">
         <h3>Rooms:</h3>
-        { this.state.rooms.map( room => <li>{room.name}</li>) }<br />
+        { this.state.rooms.map( (room, index) => <li key={index}>{room.name}</li>) }<br />
         <form className="newRoom" onSubmit={(e) => this.createRoom(e)}>
           <input type="text" id="roomInput" placeholder="Enter Room Name" onChange={(e) => this.handleChange(e)} />
           <input type="submit" value="Submit" />
