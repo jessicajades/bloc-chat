@@ -27,7 +27,7 @@ class RoomList extends Component {
   createMessage(e){
     e.preventDefault();
     this.messageRef.push({
-      username: "<USERNAME HERE>",
+      username: this.props.user ? this.props.user.displayName : 'guest',
       content: this.state.newMessage,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.props.activeRoom.key
@@ -53,7 +53,7 @@ class RoomList extends Component {
         {
           this.getFilteredRooms().map((message, i, arr) => {
             return (
-              <div key={i}>{message.content}</div>
+              <div key={i}>{message.username}: {message.content}</div>
             )
           })
         }
