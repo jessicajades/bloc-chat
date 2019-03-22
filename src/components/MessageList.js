@@ -35,6 +35,12 @@ class RoomList extends Component {
     document.getElementById('messageInput').value = '';
   }
 
+  deleteMessage(msg) {
+    const deleteKey = msg.key;
+    this.messageRef.child(deleteKey).remove();
+    this.setState({ messages: this.state.messages.filter(message => message.key !== deleteKey)});
+  }
+
   getFilteredRooms() {
     return this.state.messages.filter(message => {
       return this.props.activeRoom.key === message.roomId;
@@ -53,7 +59,11 @@ class RoomList extends Component {
         {
           this.getFilteredRooms().map((message, i, arr) => {
             return (
-              <div key={i}>{message.username}: {message.content}</div>
+              <div key={i}>{message.username}: {message.content}
+                <button id="delete" onClick={() => this.deleteMessage(message)}>
+                  <span className="ion-md-trash"></span>
+                </button>
+              </div>
             )
           })
         }

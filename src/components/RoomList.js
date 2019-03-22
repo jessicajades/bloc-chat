@@ -25,6 +25,12 @@ class RoomList extends Component {
     document.getElementById('roomInput').value = '';
   }
 
+  deleteRoom(room) {
+    const deleteKey = room.key;
+    this.roomsRef.child(deleteKey).remove();
+    this.setState({ rooms: this.state.rooms.filter(room => room.key !== deleteKey)});
+  }
+
   componentDidMount() {
     this.roomsRef.on('child_added', snapshot => {
       const room = snapshot.val();
@@ -40,6 +46,9 @@ class RoomList extends Component {
         { this.state.rooms.map( (room) =>
           <li key={room.key} onClick={() => this.props.handleRoomClick(room)} className="room-list">
             {room.name}
+            <button id="delete" onClick={() => this.deleteRoom(room)}>
+              <span className="ion-md-trash"></span>
+            </button>
           </li>
         )}<br />
         <form className="newRoom" onSubmit={(e) => this.createRoom(e)}>
